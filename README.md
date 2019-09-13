@@ -13,7 +13,7 @@
 	* `ingredient type Language(L) | Package(P) | Image(I): Language`
 	* `availability (public | private): public`
 * Use template generated `subl ~/openjdk-submission/openjdk/activestate-descriptor.yaml`
-```
+```yaml
 name: OpenJDK
 primary_namespace: language
 description: # a short description of the ingredient
@@ -48,7 +48,7 @@ versions:
     type: # type of this dependency, e.g. 'build', 'runtime', 'test'
 ```
 * Fill in the details:
-```
+```yaml
 name: OpenJDK
 primary_namespace: language
 description: The OpenJDK Java Runtime
@@ -597,8 +597,21 @@ versions:
 	* `availability (public | private): public`
 	
 * Use template generated `subl ~/openjdk-submission/openjdk-build-tools/activestate-descriptor.yaml`
-* Fill in the template:
+```yaml
+name: string
+is_stable_revision: false
+platform_id: existing platform uuid
+provided_features:
+- feature: string
+  is_activestate_version: false
+  is_default_provider: false
+  namespace: image
+  version: '0'
+type: Docker|WindowsInstance
+version: 0.0.0
 ```
+* Fill in the template:
+```yaml
 name: openjdk-linux-builder
 is_stable_revision: true
 platform_id: 681d5381-518c-5f4c-b367-df05c8d525e2
