@@ -656,3 +656,4 @@ digest: sha256:e7d38b3517548a1c71e41bffe9c8ae6d6d29546ce46bf62159837aad072c90aa
 version: 8.0
 ```
 * Submit Builder image definition to platform using `~/openjdk-submission/state add openjdk-linux-builder-image`
+* Re-submit OpenJDK definition `~/openjdk-submission/state add openjdk`
