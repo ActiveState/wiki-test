@@ -1,14 +1,14 @@
 # User Guide. Adding OpenJDK 9
 1. [Prerequisites](#prerequisites)
-2. [Provide OpenJDK definition](#provide-openjdk-definition)
-3. [Provide Image Definition](#provide-image-definition)
+2. [Provide OpenJDK language definition](#provide-openjdk-language-definition)
+3. [Provide OpenJDK Builder image definition](#provide-openjdk-builder-image-definition)
 
 ## Prerequisites
 * Install ActiveState State Tool
 * Create a folder for your work `mkdir ~/openjdk-submission`
 
-## Provide OpenJDK definition
-* Use `~/opendjk-submission/state add` and follow the guide
+## Provide OpenJDK language definition
+* Use `~/opendjk-submission/state create` and follow the guide
 	* `name: OpenJDK` 
 	* `ingredient type Language(L) | Package(P) | Image(I): Language`
 	* `availability (public | private): public`
@@ -47,6 +47,11 @@ versions:
     description: # description of the dependency
     type: # type of this dependency, e.g. 'build', 'runtime', 'test'
 ```
+* Version Type?
+* Download OpenJDK source code
+* Zip it up into ~/openjdk-submission/openjdk/openjdk9.tar.gz
+* Toolchain discovery
+* Namespace discovery
 * Fill in the details:
 ```yaml
 name: OpenJDK
@@ -205,7 +210,7 @@ versions:
   - Y. Srinivas Ramakrishna
   - Zhengyu Gu
   copyright_text: 
-    The GNU General Public License (GPL)
+    "The GNU General Public License (GPL)
     
     Version 2, June 1991
     
@@ -266,13 +271,13 @@ versions:
     
     0. This License applies to any program or other work which contains a notice
     placed by the copyright holder saying it may be distributed under the terms of
-    this General Public License.  The "Program", below, refers to any such program
-    or work, and a "work based on the Program" means either the Program or any
+    this General Public License.  The \"Program\", below, refers to any such program
+    or work, and a \"work based on the Program\" means either the Program or any
     derivative work under copyright law: that is to say, a work containing the
     Program or a portion of it, either verbatim or with modifications and/or
     translated into another language.  (Hereinafter, translation is included
-    without limitation in the term "modification".) Each licensee is addressed as
-    "you".
+    without limitation in the term \"modification\".) Each licensee is addressed as
+    \"you\".
     
     Activities other than copying, distribution and modification are not covered by
     this License; they are outside its scope.  The act of running the Program is
@@ -432,8 +437,8 @@ versions:
     or concerns.
     
     Each version is given a distinguishing version number.  If the Program
-    specifies a version number of this License which applies to it and "any later
-    version", you have the option of following the terms and conditions either of
+    specifies a version number of this License which applies to it and \"any later
+    version\", you have the option of following the terms and conditions either of
     that version or of any later version published by the Free Software Foundation.
     If the Program does not specify a version number of this License, you may
     choose any version ever published by the Free Software Foundation.
@@ -451,7 +456,7 @@ versions:
     11. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR
     THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.  EXCEPT WHEN OTHERWISE
     STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE
-    PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
+    PROGRAM \"AS IS\" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
     INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
     FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND
     PERFORMANCE OF THE PROGRAM IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE,
@@ -476,7 +481,7 @@ versions:
     
     To do so, attach the following notices to the program.  It is safest to attach
     them to the start of each source file to most effectively convey the exclusion
-    of warranty; and each file should have at least the "copyright" line and a
+    of warranty; and each file should have at least the \"copyright\" line and a
     pointer to where the full notice is found.
     
         One line to give the program's name and a brief idea of what it does.
@@ -513,7 +518,7 @@ versions:
     mouse-clicks or menu items--whatever suits your program.
     
     You should also get your employer (if you work as a programmer) or your school,
-    if any, to sign a "copyright disclaimer" for the program, if necessary.  Here
+    if any, to sign a \"copyright disclaimer\" for the program, if necessary.  Here
     is a sample; alter the names:
     
         Yoyodyne, Inc., hereby disclaims all copyright interest in the program
@@ -530,13 +535,13 @@ versions:
     License instead of this License.
     
     
-    "CLASSPATH" EXCEPTION TO THE GPL
+    \"CLASSPATH\" EXCEPTION TO THE GPL
     
     Certain source files distributed by Oracle America and/or its affiliates are
     subject to the following clarification and special exception to the GPL, but
     only where Oracle has expressly included in the particular source file's header
-    the words "Oracle designates this particular file as subject to the "Classpath"
-    exception as provided by Oracle in the LICENSE file that accompanied this code."
+    the words \"Oracle designates this particular file as subject to the \"Classpath\"
+    exception as provided by Oracle in the LICENSE file that accompanied this code.\"
     
         Linking this library statically or dynamically with other modules is making
         a combined work based on this library.  Thus, the terms and conditions of
@@ -553,7 +558,7 @@ versions:
         the library, but you are not obligated to do so.  If you do not wish to do
         so, delete this exception statement from your version.
     © 2007, 2019 Oracle and/or its affiliates
-    Terms of Use · Privacy · Trademarksx
+    Terms of Use · Privacy · Trademarksx"
   release_timestamp: '2017-08-24T14:35:58.000000Z'
   documentation_uri: https://openjdk.java.net/guide/
   is_binary_only: false
@@ -586,19 +591,18 @@ versions:
     description: null
     type: build
 ```
+* Submit OpenJDK definition to platform `~/openjdk-submission/state add openjdk`. The command will fail as we are missing the OpenJDK build tools
 
-* U
-* provide a container descriptor with tooling in it ready for building.
-
-## Provide image definition
+## Provide OpenJDK Builder Image definition
 * Use `~/opendjk-submission/state add` and follow the guide
-	* `name: openjdk-build-tools` 
-	* `ingredient type Language(L) | Package(P) | Image(I): Image`
+	* `name: openjdk-linux-builder-image` 
+	* `ingredient type Language(L) | Package(P) | Image(I) | ToolChain(T): Image`
+	* `image type Docker(D) | AMI Instance (A): Docker`
 	* `availability (public | private): public`
 	
-* Use template generated `subl ~/openjdk-submission/openjdk-build-tools/activestate-descriptor.yaml`
+* Use template generated `subl ~/openjdk-submission/openjdk-linux-builder-image/activestate-descriptor.yaml`
 ```yaml
-name: string
+name: openjdk-linux-builder-image
 is_stable_revision: false
 platform_id: existing platform uuid
 provided_features:
@@ -607,12 +611,37 @@ provided_features:
   is_default_provider: false
   namespace: image
   version: '0'
-type: Docker|WindowsInstance
+type: Docker
+repo: #docker repository
+digest: #image digest
 version: 0.0.0
 ```
+* Create a dockerfile for the image
+```dockerfile
+FROM openshift/base-centos7
+RUN yum -y groupinstall "Development Tools"
+RUN yum -y install java-1.8.0-openjdk-devel
+RUN yum -y install libXtst-devel libXt-devel libXrender-devel libXi-devel
+RUN yum -y install cups-devel
+RUN yum -y install alsa-lib-devel
+RUN yum -y install elfutils-libelf-devel
+```
+* Build the image
+```commandline
+docker build . -t activestate/openjdk-linux-builder-image
+```
+
+* Push the image to docker hub
+```commandline
+docker push activestate/openjdk-linux-builder-image --digests
+4007f96df2a4: Pushed 
+0271b8eebde3: Pushed 
+latest: digest: sha256:e7d38b3517548a1c71e41bffe9c8ae6d6d29546ce46bf62159837aad072c90aa
+```
+    
 * Fill in the template:
 ```yaml
-name: openjdk-linux-builder
+name: openjdk-linux-builder-image
 is_stable_revision: true
 platform_id: 681d5381-518c-5f4c-b367-df05c8d525e2
 provided_features:
@@ -626,3 +655,4 @@ repo: activestate
 digest: sha256:e7d38b3517548a1c71e41bffe9c8ae6d6d29546ce46bf62159837aad072c90aa
 version: 8.0
 ```
+* Submit Builder image definition to platform using `~/openjdk-submission/state add openjdk-linux-builder-image`
