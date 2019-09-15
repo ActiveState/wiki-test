@@ -1,34 +1,38 @@
 # First principals
 
-There is an Ingredient *A* whose source is the content "Hell World!"
+##  Ingredient **A** whose source is the content "Hello World!"
 
 It uses the concat builder and sends the hello.txt argument
 
-## Request
+### Request
  ```graphql
-mutation AddIngredient (
+mutation Ingredient (
  name : "activestate/A"
  src : "data:,Hello%2C%20World!"
- builder: activestate/builders/concat.sh@123
- args: ["hello.txt"]
+ builder : activestate/builders/concat.sh@123
+ args: [ "hello.txt" ]
 ){
   id
   revision
+  timestamp
 }
 ``` 
 
 
-## Response
+### Response
 
 ```json
 {
   "data" : {
     "id": "AAA-83838-03030-83838",
-    "revision": 0
+    "revision": 0,
+    "timestamp": 1234
   }
 }
 ```
 
+
+## A builder is just a shell script in a git repo
 
 Note the concat builder takes a url and saves it's results to the name that was set as the first argument.
 
@@ -49,52 +53,58 @@ echo data_url_to_file($SRC) > $out/$1
 ```
 
 
-We can retreive the artifacts for the ingredient if it were built at time 1234
-
-
-## Request
-
-
-```graphql
-
-query {
-  artifacts(time=1234, platform=macos){
-    activestate/A
-  }
-}
-```
+## We can retreive the artifacts for the ingredient if it were built at time 1234
 
 The `artifacts()` query will return a list of artifact records that include it's status, version and revisions.
 Each artifact will have a list of URLs that are the outputed results after the build process.
 
 
-```json
-{
-  "data" : {
-    "artifacts" : {
-      "timestamp": 1234,
-      "activestate/A": {
-        "status": BUILT,
-        "revision": 0,
-        "version": 0,
-        "urls": ["http://activestate.com/storage/AAA-83838-03030-83838-activestate-A/hello.txt"]
-      }
-    }
+### Request
+
+
+```graphql
+
+query {
+  timestamp
+  artifacts(attime=1234, platform=macos requirments=["activestate/A"]){
+     name
+     status
+     revision
+     urls
   }
 }
 ```
 
 
+### Response
+```json
+{
+  "data" : {
+    "timestamp": 1234,
+    "artifacts" : [{
+        "name": "activestate/A",
+        "status": "BUILT",
+        "revision": 0,
+        "version": 0,
+        "urls": ["http://activestate.com/storage/AAA-83838-03030-83838-activestate-A/hello.txt"]
+     }]  
+  }
+}
+```
+
+
+## Defining an ingredinet with a dependency
+
 There is an ingredient B who depends on A
 
 ## Request
  ```graphql
-mutation AddIngredient (
+mutation Ingredient (
  name : "activestate/B"
  src : "http://activestate.com/some-other-file"
  builder: activestate/builders/zip.py@123
  requires : {
-    "activestate/A/hello.txt": "Latest"
+    "activestate/A/hello.txt": "Latest" ; Valid values Latest | Earliest | Between(v1, v2)  
  }
 ){
   timestamp
@@ -108,7 +118,7 @@ mutation AddIngredient (
 ```json
 {
   "data" : {
-    timestamp: 1235
+    "timestamp": 1235,
     "id": "BBB-83838-03030-83838",
     "revision": 0
   }
@@ -137,19 +147,21 @@ with ZipFile(OUT_PATH, 'w') as myzip:
 Note this time we used a builder script written in python which creates a new zipfile named after our SRC (in this case some-other-file.zip). In the zip is placed the SRC which is `http://activestate.com/some-other-file` *AND* hello.txt which was available
 from activestate/A.
 
-Note requirements are passed as a JSON structure, the contents and other metadata is available in the REQUIREMENTS json structure. The zip builder uses this information to locate the contents of hello.txt and include it in the `some-other-file.zip`
+Requirements are passed as a JSON structure, the contents and other metadata is available in the REQUIREMENTS json structure. The zip builder uses this information to locate the contents of hello.txt and include it in the `some-other-file.zip`
 
 
 ## Request
 
-
-```graphql
-
-query {
-  artifacts(time=1234, platform=macos){
-    activestate/B
+```query {
+  timestamp
+  artifacts(attime=1234, platform=macos requirments=["activestate/B"]){
+     name
+     status
+     revision
+     urls
   }
 }
+
 ```
 
 ## Response
@@ -158,9 +170,227 @@ query {
 ```json
 {
   "errors" : {
-    timestamp: 1235
-    "id": "BBB-83838-03030-83838",
-    "revision": 0
+    "message": "There are no ingredients that sastisfy the requirement activestate/B at or before timestamp 1234"
+
   }
 }
 ```
+
+Ack! What happened! Note every addition to the graft is kept for all time. We added `activestate/B` some time after 1234. In order to maintain reproducability, certain queries like `archive()` requires a `attime:Timestmap` to determine which changes it will consider when making the build. Because we specified a timestamp prior to the addition of `activestate/B` the system is telling us it does not exst. Let's try again with an updated timestamp.
+
+## Request
+
+```graphql
+
+query {
+  timestamp
+  artifacts(attime=2007, platform=macos requirments=["activestate/A"]){
+     name
+     status
+     revision
+     urls
+  }
+}
+
+
+
+```
+
+### Response
+```json
+{
+  "data" : {
+    "timestamp": 1235,
+    "artifacts" : [{
+       "name" :"activestate/B", 
+        "status": "BUILT",
+        "revision": 0,
+        "version": 0,
+        "urls": ["http://activestate.com/storage/BBB-83838-03030-83838-activestate-B/some-other-file.zip"]
+      }
+    }
+  }
+}
+```
+
+Because we asked for `activestate/B` we only received the artifacts for B. There's nothing stopping us from asking for both the artifacts of `A` *and* `B`
+
+
+```graphql
+
+query {
+  timestamp
+  artifacts(
+    attime=2007, 
+    platform=macos, 
+    requirments=[
+       "activestate/A"
+        "activestate/B"
+    ]
+   ){
+     name
+     status
+     revision
+     urls
+  }
+}
+```
+
+### Response
+```json
+{
+  "data" : {
+    "timestamp": 1235,
+    "artifacts" : [{
+       "name" :"activestate/A",
+        "status": "BUILT",
+        "revision": 0,
+        "version": 0,
+        "urls": ["http://activestate.com/storage/AAA-83838-03030-83838-activestate-A/hello.txt"]
+      },
+      {
+       "name" :"activestate/B" 
+        "status": "BUILT",
+        "revision": 0,
+        "version": 0,
+        "urls": ["http://activestate.com/storage/BBB-83838-03030-83838-activestate-B/some-other-file.zip"]
+      }
+    ]
+  }
+}
+```
+
+
+## Updating an Ingredient
+You update an ingredient is done the same way you add them
+
+### Request
+
+ ```graphql
+mutation Ingredient (
+ name : "activestate/A"
+ src : "data:,Hi%2C%20Mom!"
+ builder : activestate/builders/concat.sh@123
+ args: [ "hello.txt" ]
+){
+  id
+  revision
+  timestamp
+}
+``` 
+
+### Response
+
+```json
+{
+  "data" : {
+    "id": "CCC-8929038-0030-83838",
+    "revision": 1,
+    "timestamp": 2009
+  }
+}
+```
+
+We changed the source URL which produces a new revision of the Ingredient we added previously in addition the id was updated. If we ask for the artifacts of A now with a newer timestamp.
+
+### Request
+
+
+```graphql
+
+query {
+  timestamp
+  artifacts(attime=2009, platform=macos requirments=["activestate/A"]){
+     name
+     status
+     revision
+     urls
+  }
+}
+```
+
+
+### Response
+```json
+{
+  "data" : {
+    "timestamp": 2009,
+    "artifacts" : [{
+        "name": "activestate/A
+        "status": "BUILT",
+        "revision": 1,
+        "urls": ["http://activestate.com/storage/CBIC-1234-838-8323-activestate-A/hello.txt"]
+      }
+    ]
+  }
+}
+```
+We receive an artifact whith a different content addresable hash
+
+What if we made a huge mistake and want to revert?
+
+### Request
+ ```graphql
+mutation Ingredient (
+ name : "activestate/A"
+ src : "data:,Hello%2C%20World!"
+ builder : activestate/builders/concat.sh@123
+ args: [ "hello.txt" ]
+){
+  id
+  revision
+  timestamp
+}
+``` 
+
+
+### Response
+
+```json
+{
+  "data" : {
+    "id": "AAA-83838-03030-83838",
+    "revision": 3,
+    "timestamp": 2012
+  }
+}
+```
+**NOTE: wonder why we even bother with a revision number **
+
+As before the revision number incremented. But something curious happens when asking for the artifacts.
+
+### Request
+
+
+```graphql
+
+query {
+  timestamp
+  artifacts(attime=2012, platform=macos requirments=["activestate/A"]){
+     name
+     status
+     revision
+     urls
+  }
+}
+```
+
+
+### Response
+```json
+{
+  "data" : {
+    "timestamp": 2012,
+    "artifacts" : [{
+        "name": "activestate/A",
+        "status": "BUILT",
+        "revision": 3,
+        "version": 0,
+        "urls": ["http://activestate.com/storage/AAA-83838-03030-83838-activestate-A/hello.txt"]
+      }
+    ]
+  }
+}
+```
+
+You'll note that we that the URL is the same for revision 0 of `activestate/A` that's because the system deceted we're using the same inputs and the same builder therefore determined it could safely resue the old output.
