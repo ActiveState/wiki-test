@@ -360,7 +360,7 @@ query {
     ]
   }
 }
-
+```
 
 
 What if we made a huge mistake and want to revert?
@@ -429,4 +429,4 @@ query {
 }
 ```
 
-You'll note that we that the URL is the same for revision 0 of `activestate/A` that's because the system deceted we're using the same inputs and the same builder therefore determined it could safely resue the old output.
+You'll note that the URL is the same for revision 0 of `activestate/A`. That's because the system deceted we're using the same inputs and the same builder therefore determined it could safely resue the old output.
