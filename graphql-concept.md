@@ -23,7 +23,7 @@ mutation AddIngredient (
 ```json
 {
   "data" : {
-    "id": "AAA-83838-03030-83838"
+    "id": "AAA-83838-03030-83838",
     "revision": 0
   }
 }
@@ -49,7 +49,7 @@ echo data_url_to_file($SRC) > $out/$1
 ```
 
 
-We can retreive the artifacts from the ingredient
+We can retreive the artifacts for the ingredient if it were built at time 1234
 
 
 ## Request
@@ -72,11 +72,11 @@ Each artifact will have a list of URLs that are the outputed results after the b
 {
   "data" : {
     "artifacts" : {
-      "timestamp": 1234
+      "timestamp": 1234,
       "activestate/A": {
-        "status": BUILT
-        "revision": 0
-        "version": 0
+        "status": BUILT,
+        "revision": 0,
+        "version": 0,
         "urls": ["http://activestate.com/storage/AAA-83838-03030-83838-activestate-A/hello.txt"]
       }
     }
@@ -86,26 +86,81 @@ Each artifact will have a list of URLs that are the outputed results after the b
 
 
 There is an ingredient B who depends on A
+
 ## Request
  ```graphql
 mutation AddIngredient (
  name : "activestate/B"
- src : "http://activestate.com/some-tar-file"
- builder: activestate/builders/concat.sh@123
- args: ["hello.txt"]
+ src : "http://activestate.com/some-other-file"
+ builder: activestate/builders/zip.py@123
+ requires : {
+    "activestate/A/hello.txt": "Latest"
+ }
 ){
+  timestamp
   id
   revision
 }
 ``` 
 
+## Response
 
-```
+```json
 {
-  name: B
+  "data" : {
+    timestamp: 1235
+    "id": "BBB-83838-03030-83838",
+    "revision": 0
+  }
+}
+```
 
-  requires:
-    
-    
+
+Above we created an ingredient **B** who depends on A and uses `some-other-builder.py` to build it whose contents look like this
+
+```python
+from zimpfile import ZipFile
+import os
+import json
+
+SRC = os.environ['SRC']
+OUT = os.environ['OUT']
+REQUIREMENTS = json.loads(os.environ['REQUIREMENTS'])
+
+OUT_PATH = os.path.join(OUT, os.path.basename(SRC), '.zip)
+
+with ZipFile(OUT_PATH, 'w') as myzip:
+    myzip.write(SRC)
+    myzip.write(REQUIRMENTS['activestate/A/hello.txt'])
+```
+
+Note this time we used a builder script written in python which creates a new zipfile named after our SRC (in this case some-other-file.zip). In the zip is placed the SRC which is `http://activestate.com/some-other-file` *AND* hello.txt which was available
+from activestate/A.
+
+Note requirements are passed as a JSON structure, the contents and other metadata is available in the REQUIREMENTS json structure. The zip builder uses this information to locate the contents of hello.txt and include it in the `some-other-file.zip`
+
+
+## Request
+
+
+```graphql
+
+query {
+  artifacts(time=1234, platform=macos){
+    activestate/B
+  }
+}
+```
+
+## Response
+
+
+```json
+{
+  "errors" : {
+    timestamp: 1235
+    "id": "BBB-83838-03030-83838",
+    "revision": 0
+  }
 }
 ```
