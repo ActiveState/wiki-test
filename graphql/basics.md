@@ -7,10 +7,10 @@ It uses the concat builder and sends the hello.txt argument
 ### Request
  ```graphql
 mutation Ingredient (
- name : "activestate/A"
- src : "data:,Hello%2C%20World!"
- builder : activestate/builders/concat.sh@123
- args: [ "hello.txt" ]
+    name : "activestate/A"
+    src : "data:,Hello%2C%20World!"
+    builder : "activestate/builders/concat.sh@123"
+    args: [ "hello.txt" ]
 ){
   id
   revision
