@@ -137,14 +137,14 @@ SRC = os.environ['SRC']
 OUT = os.environ['OUT']
 REQUIREMENTS = json.loads(os.environ['REQUIREMENTS'])
 
-OUT_PATH = os.path.join(OUT, os.path.basename(SRC), '.zip)
+OUT_PATH = os.path.join(OUT, os.path.basename(SRC), '.zip')
 
 with ZipFile(OUT_PATH, 'w') as myzip:
     myzip.write(SRC)
     myzip.write(REQUIRMENTS['activestate/A/hello.txt'])
 ```
 
-Note this time we used a builder script written in python which creates a new zipfile named after our SRC (in this case some-other-file.zip). In the zip is placed the SRC which is `http://activestate.com/some-other-file` *AND* hello.txt which was available
+Note this time we used a builder script written in python which creates a new zipfile named after our SRC (in this case some-other-file.zip). In the zip is placed the SRC which is `http://activestate.com/some-other-file` *AND* `hello.txt` which was available
 from activestate/A.
 
 Requirements are passed as a JSON structure, the contents and other metadata is available in the REQUIREMENTS json structure. The zip builder uses this information to locate the contents of hello.txt and include it in the `some-other-file.zip`
@@ -152,7 +152,9 @@ Requirements are passed as a JSON structure, the contents and other metadata is 
 
 ## Request
 
-```query {
+```graphql
+
+query {
   timestamp
   artifacts(attime=1234, platform=macos requirments=["activestate/B"]){
      name
@@ -208,7 +210,7 @@ query {
         "version": 0,
         "urls": ["http://activestate.com/storage/BBB-83838-03030-83838-activestate-B/some-other-file.zip"]
       }
-    }
+    ]
   }
 }
 ```
@@ -316,7 +318,7 @@ query {
   "data" : {
     "timestamp": 2009,
     "artifacts" : [{
-        "name": "activestate/A
+        "name": "activestate/A",
         "status": "BUILT",
         "revision": 1,
         "urls": ["http://activestate.com/storage/CBIC-1234-838-8323-activestate-A/hello.txt"]
