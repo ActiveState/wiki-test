@@ -329,6 +329,40 @@ query {
 ```
 We receive an artifact whith a different content addresable hash
 
+In fact, because 'B' depends on 'A' it to will have a different artifact (assuming you use the later timestamp).
+
+### Request
+```graphql
+
+query {
+  timestamp
+  artifacts(attime=2009, platform=macos requirments=["activestate/B"]){
+     name
+     status
+     revision
+     urls
+  }
+}
+```
+
+
+### Response
+```json
+{
+  "data" : {
+    "timestamp": 2009,
+    "artifacts" : [{
+        "name": "activestate/B",
+        "status": "BUILT",
+        "revision": 0,
+        "urls": ["http://activestate.com/storage/ZIRE-20937-0ee0-83838-activestate-B/some-other-file.zip"]
+      }
+    ]
+  }
+}
+
+
+
 What if we made a huge mistake and want to revert?
 
 ### Request
