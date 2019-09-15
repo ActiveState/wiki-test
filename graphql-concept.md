@@ -251,7 +251,7 @@ query {
         "urls": ["http://activestate.com/storage/AAA-83838-03030-83838-activestate-A/hello.txt"]
       },
       {
-       "name" :"activestate/B" 
+       "name" :"activestate/B",
         "status": "BUILT",
         "revision": 0,
         "version": 0,
