@@ -25,6 +25,26 @@ calculation.
 
 A few examples will help build up your intuition.
 
+## Adding a Versioned Ingredient
+
+We need to add a Versioned Ingredient to the BuildGraph. 
+
+```graphql
+mutation Ingredient (
+   name : "activestate/A"
+   src : "data:,Bonjur%2C%20World!"
+   builder : "activestate/builders/concat.sh@123"
+   version: 1
+   args: [ "hello.txt" ]
+){
+ id
+ revision
+ timestamp
+}
+```
+
+Multiple Versions of an Ingredient can exist in BuildGraph at the same time. This differes 
+
 
 # Version Specifiers
 Side note. It is important  to undesstand the BuildGraph is designed
