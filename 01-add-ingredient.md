@@ -86,7 +86,7 @@ Let's fill those in:
 ```graphql
   versions: [
 ```
-The platform supports uploading data about multiple versions in one submission, but here we're
+The platform supports uploading data about multiple versions in one submission, but we're
 only adding a single version so we can use a single object array.
 ```graphql
     {
@@ -97,17 +97,17 @@ only adding a single version so we can use a single object array.
        release_timestamp: "1970-01-01T00:00:00.000000Z" # date/time of release
        source_uri:                                      # URI to the source code as a zip 
 ```
-Here the state tool has added the `version` string we specified in the arguments to `state
+The state tool has added the `version` string we specified in the arguments to `state
 ingredient new`.  It's added here rather than at the top level as, as explained above, we are
 able to submit multiple versions at once should we so wish.  The `is_stable_release` flag is to
 indicate whether or not this is a stable release as opposed to a beta or release candidate.  The
 platform also requires the `release_timestamp` for the version, which indicates when this
 version was released to the world as opposed to the date it was added to the platform.  The
 default timestamp shown here is for illustration purposes only, to show the required format
-(__other formats may be usable here too?__).  Finally, the `source_uri` field tells the platform
-where it can download the source code for this version from as a tarball or zip file.
+(__TODO: other formats may be usable here too?__).  Finally, the `source_uri` field tells the
+platform where it can download the source code for this version from as a tarball or zip file.
 
-Let's fill in the missing information here:
+Let's fill in the missing information:
 ```graphql
        release_timestamp: "2019-09-15T12:00:00.000000Z"
        source_uri: "https://example.org/mypymodule/download/mypymodule-0.0.1.tar.gz"
