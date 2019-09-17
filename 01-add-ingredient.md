@@ -95,6 +95,44 @@ able to submit multiple versions at once should we so wish.  The `is_stable_rele
 indicate whether or not this is a stable release as opposed to a beta or release candidate.  The
 platform also requires the `release_timestamp` for the version, which indicates when this
 version was released to the world as opposed to the date it was added to the platform.  The
-default timestamp shown here is for illustration purposes only to show the required format
+default timestamp shown here is for illustration purposes only, to show the required format
 (__other formats may be usable here too?__).  Finally, the `source_uri` field tells the platform
 where it can download the source code for this version from as a tarball or zip file.
+```graphql
+       build_rule: {
+         platform: []                                   # a list of platform features required 
+                                                        #   for this toolchain to be selected
+
+         toolchain: python-builder                      # URI to a toolchain implementation
+       }
+```
+The `build_rule` section is where we tell the platform how to build our module.  In this case,
+our module is designed to be built and installed with python's `setuptools` so we can safely use
+the `python-builder` toolchain on all platforms.  Consequently, we don't need to specify any
+platform constraints (e.g. operating system, cpu architecture) for this, although we could
+specify different toolchains to use on e.g. linux and windows should we need to.  Tollchains are
+discussed further in the [Toolchains](toolchains.md) document.
+
+```graphql
+       provided_features: [
+         feature: "mypymodule"                          # name of the feature this version 
+                                                        #   provides, usually the ingredient
+                                                        #   name
+
+         version: "0.0.1"                               # version of the feature provided
+         is_default_provider: true                      # false if this is an alternative 
+                                                        #   provider for a feature
+
+         namespace: "language/python"                   # namespace of the feature, usually 
+                                                        #   the same as the namespace of the 
+                                                        #   ingredient
+       ]
+```
+
+```graphql
+){
+  id
+  revision
+  timestamp
+}
+```
