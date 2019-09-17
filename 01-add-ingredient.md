@@ -7,7 +7,7 @@ called `mypymodule` which we'll suppose is ready for release. Run
 state ingredient new mypymodule --version 0.0.1 --namespace language/python
 ```
 This will create a `mypymodule` directory under your current working directory with a single
-template file `mypymodule.graphql` in it.  Th file will look like this:
+template file `mypymodule.graphql` in it.  The file will look like this:
 ```graphql
 mutation Ingredient (
   name:              "mypymodule"                       # name of the ingredient
@@ -56,7 +56,8 @@ mutation Ingredient (
 This represents the minimum level of information required by the ActiveState Platform to
 incorporate and build this module and much of it has been pre-filled.  It takes the form of a
 graphql mutation which gives us a great deal of flexibility in what information we want to
-submit to the platform about our ingredient.  Let's tackle the data in sections.
+submit to the platform about our ingredient.  Go ahead and open this file in your favourite
+editor and we'll tackle the data in section-by-section.
 
 ```graphql
   name:              "mypymodule"                       # name of the ingredient
@@ -74,6 +75,12 @@ The `descripton` field is a short (a few words) description of the module and th
 should be the URL of the module's home page.  This latter field is optional, but included here
 because most projects will have one, even if it is a just a hosted git repo.
 
+Let's fill those in:
+```graphql
+  description: "The most awesome Python module"
+  website: "https://example.org/mypymodule"
+```
+
 ```graphql
   versions: [
 ```
@@ -86,7 +93,6 @@ only adding a single version so we can use a single object array.
                                                         #   false otherwise
 
        release_timestamp: "1970-01-01T00:00:00.000000Z" # date/time of release
-
        source_uri:                                      # URI to the source code as a zip 
 ```
 Here the state tool has added the `version` string we specified in the arguments to `state
@@ -98,6 +104,13 @@ version was released to the world as opposed to the date it was added to the pla
 default timestamp shown here is for illustration purposes only, to show the required format
 (__other formats may be usable here too?__).  Finally, the `source_uri` field tells the platform
 where it can download the source code for this version from as a tarball or zip file.
+
+Let's fill in the missing information here:
+```graphql
+       release_timestamp: "2019-09-15T12:00:00.000000Z"
+       source_uri: "https://example.org/mypymodule/download/mypymodule-0.0.1.tar.gz"
+```
+
 ```graphql
        build_rule: {
          platform: []                                   # a list of platform features required 
@@ -110,7 +123,7 @@ The `build_rule` section is where we tell the platform how to build our module. 
 our module is designed to be built and installed with python's `setuptools` so we can safely use
 the `python-builder` toolchain on all platforms.  Consequently, we don't need to specify any
 platform constraints (e.g. operating system, cpu architecture) for this, although we could
-specify different toolchains to use on e.g. linux and windows should we need to.  Tollchains are
+specify different toolchains to use on e.g. linux and windows should we need to.  Toolchains are
 discussed further in the [Toolchains](toolchains.md) document.
 
 ```graphql
@@ -128,7 +141,16 @@ discussed further in the [Toolchains](toolchains.md) document.
                                                         #   ingredient
        ]
 ```
-
+This section tells the platform about the features that this module provides.  The platform
+supports the notion of several ingredients being able to provide the same feature so that
+alternative providers are available should project maintainers want to give users a choice when
+dependencies are being resolved.  This gives users, for example, the option to choose from 2
+API-compatible libraries to provide implementations of that API as in the case of OpenSSL and
+LibreSSL.  Here, we are the only provider of our module's API so we will fill in the details of
+our module, essentially declaring that we are providing `mypymodule`'s API and/or other feature
+set and declaring that our module should be the default provider for anything that requires
+`mypymodule` via the `is_default_provider` field.  Features are discussed in more detail in the
+[Features](features.md) document.
 ```graphql
 ){
   id
@@ -136,3 +158,12 @@ discussed further in the [Toolchains](toolchains.md) document.
   timestamp
 }
 ```
+This last section is what we would like to be told about our newly created ingredient once it is
+created: the system-assigned `id`, the `revision` of the ingredient we created (discussed
+further in [Revisions](revisions.md)) and the platform `timestamp` of when the ingredient was
+added to the platform.
+
+Now we've filled in the blank portions, we can submit this new ingredient to the platform using
+`state ingredient add mypymodule.graphql`
+
+## TODO: discussion of error conditions and how to correct them
