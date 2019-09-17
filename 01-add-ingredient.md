@@ -57,7 +57,9 @@ This represents the minimum level of information required by the ActiveState Pla
 incorporate and build this module and much of it has been pre-filled.  It takes the form of a
 graphql mutation which gives us a great deal of flexibility in what information we want to
 submit to the platform about our ingredient.  Go ahead and open this file in your favourite
-editor and we'll tackle the data in section-by-section.
+editor and we'll tackle the data section-by-section.
+
+## General info
 
 ```graphql
   name:              "mypymodule"                       # name of the ingredient
@@ -80,7 +82,7 @@ Let's fill those in:
   description: "The most awesome Python module"
   website: "https://example.org/mypymodule"
 ```
-
+## Versions
 ```graphql
   versions: [
 ```
@@ -110,7 +112,7 @@ Let's fill in the missing information here:
        release_timestamp: "2019-09-15T12:00:00.000000Z"
        source_uri: "https://example.org/mypymodule/download/mypymodule-0.0.1.tar.gz"
 ```
-
+## Build information
 ```graphql
        build_rule: {
          platform: []                                   # a list of platform features required 
@@ -125,7 +127,7 @@ the `python-builder` toolchain on all platforms.  Consequently, we don't need to
 platform constraints (e.g. operating system, cpu architecture) for this, although we could
 specify different toolchains to use on e.g. linux and windows should we need to.  Toolchains are
 discussed further in the [Toolchains](toolchains.md) document.
-
+## Feature provision
 ```graphql
        provided_features: [
          feature: "mypymodule"                          # name of the feature this version 
