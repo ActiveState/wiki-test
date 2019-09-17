@@ -123,7 +123,7 @@ Let's fill in the missing information:
 ```
 The `build_rule` section is where we tell the platform how to build our module.  In this case,
 our module is designed to be built and installed with python's `setuptools` so we can safely use
-the `python-builder` toolchain on all platforms.  Consequently, we don't need to specify any
+the `python-builder` toolchain on all platforms.  We don't need to specify any
 platform constraints (e.g. operating system, cpu architecture) for this, although we could
 specify different toolchains to use on e.g. linux and windows should we need to.  Toolchains are
 discussed further in the [Toolchains](toolchains.md) document.
