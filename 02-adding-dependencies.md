@@ -17,4 +17,31 @@ state ingredient scan https://github.com/AwesomeProjects/mypymodule.git
 These are convenient ways to add dependency information to our ingredient, and create a
 `dependecy_sets` section in our ingredient file.  We can also create these manually.
 
-## Manualy dependency declaration
+## Manual dependency declaration
+
+```graphql
+       dependency_sets: [
+         dependencies: [
+           {
+             conditions:                                # conditions required for this 
+                                                        #   dependency to apply, usually null
+
+             feature:                                   # name of the feature we depend on, 
+                                                        #   e.g. another ingredient, build 
+                                                        #   tool etc.
+
+             namespace:                                 # namespace of the feature, e.g. 
+                                                        #   'language', 'image'
+             requirements: {
+               comparator:                              # how we should compare versions, 
+                                                        #   e.g. 'gte', 'eq', 'lte'
+
+               version:                                 # the version of the feature we require
+             }
+           }
+         ]
+         description:                                   # description of the dependency
+         type:                                          # type of this dependency, e.g. 'build',
+                                                        #   'runtime', 'test'
+       ]
+```
