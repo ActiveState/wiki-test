@@ -7,3 +7,4 @@ Before you can begin working on contributing ingredients, you need to install th
 details.
 
 ## 1. [Adding your first ingredient](01-add-ingredient.md)
+## 2. [Declaring dependencies](02-adding-dependencies.md)
