@@ -103,9 +103,9 @@ mutation Ingredient (
  name : "activestate/B"
  src : "http://activestate.com/some-other-file"
  builder: activestate/builders/zip.py@123
- requires : {
-    "activestate/A/hello.txt": "Latest" ; Valid values Latest | Earliest | Between(v1, v2)  
- }
+ requires [
+    Any("activestate/A/hello.txt") ; Requires Any activestate/A that has a hello.txt
+ ]
 ){
   timestamp
   id
