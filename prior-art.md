@@ -92,5 +92,5 @@ jobs:
 
 
 
-[Previous: Goals :](prior-art.md) 
+[Previous: Goals](prior-art.md) 
 [Next: Press Release](press-release.md) 
