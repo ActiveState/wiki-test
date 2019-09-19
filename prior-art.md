@@ -34,7 +34,7 @@ genrule(
 [https://nixos.org/nixos/nix-pills/index.html]
 
 
-A nix deriviation called simple that compile an c executable
+A nix deriviation called simple that compiles a C executable
 ```nix
 
 with (import <nixpkgs> {});
@@ -51,8 +51,8 @@ derivation {
 A builder is anything that can be executed in this example note that it's just 
 a bash script. Anything it puts in the `$out` directory is considered the results of the step
 
-This direvation depends on `$gcc`, `$bash` those will be built before this deriviation is run. The paths
-are  set  to where the results of the depedencies are in the store.
+This derivation depends on `$gcc`, `$bash` those will be built before this derivation is run. The paths
+are set to where the results of the depedencies are in the store.
 
 
 Note that the "builder" is just a shell script
@@ -66,8 +66,8 @@ gcc -o $out/simple $src
 
 ## GitHub Actions
 
-Dosen't have the notion of composeability of build results, it's very imperative.  But you can use create an action
-which is a gitrepo with some javascript, a yaml file  and possibly a Dockerfile. ONe action can refer to another
+Dosen't have the notion of composability of build results, it's very imperative.  But you can use create an action
+which is a gitrepo with some javascript, a yaml file  and possibly a Dockerfile. One action can refer to another
 action by `org`/`repo`@`git-ref` name.
 
 They also have a matrix strategy which runs the action for various platforms.
