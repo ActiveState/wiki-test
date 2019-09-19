@@ -6,6 +6,4 @@
 5. It unifies our current thinking
 6. We can implement something over our current APIs not strat over
 
-
-
 [Next](prior-art.md) 
