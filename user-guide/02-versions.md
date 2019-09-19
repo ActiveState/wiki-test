@@ -4,25 +4,25 @@ interface Requriment{
 }
 
 
-type Any implments Requirement {name: String!} 
-type Latest implments Requirement {name: String!}
+type Any implements Requirement {name: String!} 
+type Latest implements Requirement {name: String!}
 
-type GT implments Requirment{
+type GT implements Requirment{
   name: String!
   version: String!
 }
 
-type GTE implments Requirment{
+type GTE implements Requirment{
   name: String!
   version: String!
 }
 
-type LT implments Requirment{
+type LT implements Requirment{
   name: String!
   version: String!
 }
 
-type LTE implments Requirment{
+type LTE implements Requirment{
   name: String!
   version: String!
 }
@@ -103,10 +103,14 @@ every Ingredient must be assosciated with one.
 
 The platform provides several Versian Schemas today:
 
-SemVer
-Perl
-AlphaSort
+* SemVer
+* Perl
+* AlphaSort
 
 And there's a guide for extending these as needed.
 
+
+
+[Previous: Goals](01-basics.md) 
+[Next: Press Release](03-packaging.md) 
 
