@@ -102,7 +102,7 @@ from python packages. Will we do this by namespace? Or do we let you build anyth
 
 query {
    
-   wheels(atTime=1234, platform="II-X", requirment=["namespace/feature"]) {
+   wheels(atTime=1234, platform="II-X", requirement=["namespace/feature"]) {
       urls
    }
    
