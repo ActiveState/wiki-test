@@ -39,31 +39,73 @@ In addition to packager specific arguments all packager's require one of more of
 
 | Field                | Descrption                                                                 |
 |----------------------|----------------------------------------------------------------------------|
-| **timestamp**        | Timestamp needed to reproduce this package exatly |
-|----------------------|----------------------------------------------------------------------------|
-| **requirments**      |  List of requriments and constraints. Either  `requirments` can be         |
-|                      |  specified or `orderId` but not both                                       |
-|----------------------|----------------------------------------------------------------------------|
-| **order**            | A Url to an order which contains the timestamp and requirments. Either an  |
-|                      | order can be specified or you must use `requirments` and `atTime` but not  |
-|                      | both.                                                                      |
+| **atTime**        | Timestamp needed to reproduce this package exatly |
+| **requirments**      |  List of requriments and constraints. Either  `requirments` can be specified or `orderId` but not both |
+| **order**            | A Url to an order which contains the timestamp and requirments. Either an  order can be specified or you must use `requirments` and `atTime` but not both. |
 
 ## Artifacts
 
 You've already been introduced to the  fundamental  packager query `artifacts` it can retrive the artifacts from one or more ingredients
 start building them if they haven't been built otherwise returning the results.
 
+```graphql
+
+query {
+   
+   artifacts(atTime=1234, platform="II-X", requirment=["namespace/feature"]) {
+      urls
+   }
+   
+}
+```
+
 ## Docker
 
 Is a packager that will take an artifact from the Build Graph and package it's content into a docker image that can be deployed to a repository somewhere.
+
+```graphql
+
+query {
+   
+   docker(atTime=1234, platform="II-X", requirment=["namespace/feature"]) {
+      urls
+   }
+   
+}
+```
+
 
 ## Legacy Installer
 
 You've already been introduced to the  fundamental  packager query `artifacts` it can retrive the artifacts from one or more ingredients
 start building them if they haven't been built otherwise returning the results.
 
+```graphql
+
+query {
+   
+   installer(atTime=1234, platform="II-X", requirment=["namespace/feature"]) {
+      urls
+   }
+   
+}
+```
+
+
 
 ## Python Wheels
 
 This will package all python requirments into a list of wheels. Note it is an error to specify requirments that are not Python. We'll have to figure out how to distinguisg system libraries
 from python packages. Will we do this by namespace? Or do we let you build anything and ship you the wheel we find? 
+
+```graphql
+
+query {
+   
+   wheels(atTime=1234, platform="II-X", requirment=["namespace/feature"]) {
+      urls
+   }
+   
+}
+```
+
