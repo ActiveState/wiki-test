@@ -26,3 +26,8 @@
 
 
 <kbd><img src="Queries_and_Mutations___GraphQL.png" /></kbd>
+
+
+
+[Previous: Press Release](press-release.md) 
+[Next: Press Release](user-guide/01-basics.md) 
