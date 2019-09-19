@@ -56,7 +56,7 @@ echo data_url_to_file($SRC) > $out/$1
 ## We can retreive the artifacts for the ingredient if it were built at time 1234
 
 The `artifacts()` query will return a list of artifact records that include it's status, version and revisions.
-Each artifact will have a list of URLs that are the outputed results after the build process.
+Each artifact will have a list of URLs that are the output results after the build process.
 
 
 ### Request
@@ -93,7 +93,7 @@ query {
 ```
 
 
-## Defining an ingredinet with a dependency
+## Defining an ingredient with a dependency
 
 There is an ingredient B who depends on A
 
@@ -129,7 +129,7 @@ mutation Ingredient (
 Above we created an ingredient **B** who depends on A and uses `some-other-builder.py` to build it whose contents look like this
 
 ```python
-from zimpfile import ZipFile
+from zipfile import ZipFile
 import os
 import json
 
@@ -178,7 +178,7 @@ query {
 }
 ```
 
-Ack! What happened! Note every addition to the graft is kept for all time. We added `activestate/B` some time after 1234. In order to maintain reproducability, certain queries like `archive()` requires a `attime:Timestmap` to determine which changes it will consider when making the build. Because we specified a timestamp prior to the addition of `activestate/B` the system is telling us it does not exst. Let's try again with an updated timestamp.
+Ack! What happened! Note every addition to the graph is kept for all time. We added `activestate/B` some time after 1234. In order to maintain reproducability, certain queries like `archive()` require a `attime:Timestmap` to determine which changes it will consider when making the build. Because we specified a timestamp prior to the addition of `activestate/B` the system is telling us it does not exist. Let's try again with an updated timestamp.
 
 ## Request
 
@@ -264,7 +264,7 @@ query {
 
 
 ## Updating an Ingredient
-You update an ingredient is done the same way you add them
+You update an ingredient the same way you add them
 
 ### Request
 
@@ -429,7 +429,7 @@ query {
 }
 ```
 
-You'll note that the URL is the same for revision 0 of `activestate/A`. That's because the system deceted we're using the same inputs and the same builder therefore determined it could safely resue the old output.
+You'll note that the URL is the same for revision 0 of `activestate/A`. That's because the system detected we're using the same inputs and the same builder therefore determined it could safely resue the old output.
 
 
 
