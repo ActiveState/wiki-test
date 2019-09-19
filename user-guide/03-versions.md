@@ -80,6 +80,6 @@ And there's a guide for extending these as needed.
 
 
 
-[Previous: Goals](01-basics.md) 
-[Next: Press Release](03-packaging.md) 
+[Previous: Specifying Requirements](02-requirment.md) 
+[Next: Packaging](04-packaging.md) 
 
