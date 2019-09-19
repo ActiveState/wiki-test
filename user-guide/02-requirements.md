@@ -7,7 +7,7 @@ interface Requirement{
 type Any implements Requirement {name: String!} 
 type Latest implements Requirement {name: String!}
 
-type GT implements Requirment{
+type GT implements Requirement{
   name: String!
   version: String!
 }
