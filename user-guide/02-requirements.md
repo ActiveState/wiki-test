@@ -1,5 +1,5 @@
 ```graphql
-interface Requriment{
+interface Requirement{
   name: String!
 }
 
@@ -12,17 +12,17 @@ type GT implements Requirment{
   version: String!
 }
 
-type GTE implements Requirment{
+type GTE implements Requirement{
   name: String!
   version: String!
 }
 
-type LT implements Requirment{
+type LT implements Requirement{
   name: String!
   version: String!
 }
 
-type LTE implements Requirment{
+type LTE implements Requirement{
   name: String!
   version: String!
 }
@@ -32,4 +32,4 @@ type LTE implements Requirment{
 ```
 
 [Previous: Adding a Package](01-basics.md) 
-[Next: Under Standing Versions](03-versions.md) 
+[Next: Understanding Versions](03-versions.md) 
