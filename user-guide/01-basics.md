@@ -429,7 +429,7 @@ query {
 }
 ```
 
-You'll note that the URL is the same for revision 0 of `activestate/A`. That's because the system detected we're using the same inputs and the same builder therefore determined it could safely resue the old output.
+You'll note that the URL is the same for revision 0 of `activestate/A`. That's because the system detected we're using the same inputs and the same builder therefore determined it could safely reuse the old output.
 
 
 
