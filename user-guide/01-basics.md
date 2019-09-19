@@ -434,5 +434,5 @@ You'll note that the URL is the same for revision 0 of `activestate/A`. That's b
 
 
 
-[Next: Understaning Requirments](02-requirments.md) 
+[Next: Understaning Requirments](02-requirements.md) 
 
