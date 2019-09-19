@@ -1,6 +1,6 @@
 # Inspiration
 
-We considered sevral systems. At the heart of them there's a method to declare a rule that takes
+We considered several systems. At the heart of them there's a method to declare a rule that takes
 some set of inputs, runs a shell script or other executable and creates some output. Rules can
 be composed together. An output from one rule can be used as the input to others
 
