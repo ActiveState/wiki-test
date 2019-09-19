@@ -3,7 +3,7 @@
 1. [Goals](goals.md) 
 2. [Prior Art](prior-art.md)
 3. [Press Release](press-release.md)
-4. [The DSL] (dsl.md)
+4. [The DSL](dsl.md)
 
 # Scenarios
 
