@@ -1,3 +1,36 @@
+```graphql
+interface Requriment{
+  name: String!
+}
+
+
+type Any implments Requirement {name: String!} 
+type Latest implments Requirement {name: String!}
+
+type GT implments Requirment{
+  name: String!
+  version: String!
+}
+
+type GTE implments Requirment{
+  name: String!
+  version: String!
+}
+
+type LT implments Requirment{
+  name: String!
+  version: String!
+}
+
+type LTE implments Requirment{
+  name: String!
+  version: String!
+}
+
+
+
+```
+
 # Versions
 
 In previous examples we showed you how to add simple ingredinets to the BuildGraph 
