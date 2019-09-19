@@ -11,18 +11,18 @@
 1. Plain YAML or JSON files
 2. A popular programnig Language like Python or Javascript
 3. A stripped down Language like Bazel's modified Python
-4. Using NIX since it's limited to only derivivg data
+4. Using NIX since it's limited to only deriving data
 5. Performing REST queries
 6. Writing our OWN DSL
 
-## After experimentig chose, GraphQL. Why?
+## After experimenting chose, GraphQL. Why?
 1. It represents graphs, a build system is a DAG which is a graph!
 2. It has a powerful type system and Schemas
 3. It's a description of a language only.. Implementation is left to authors
 4. Many Frameworks exist to make implementing easy
 5. Fronting REST API's is trivial
 6. It supports queries, mutations and subscriptions (think interactive logs)
-7. Finally it has a popular edit widgets... check out the graphql website. All the documentation is interactive. 
+7. Finally it has popular edit widgets... check out the graphql website. All the documentation is interactive. 
 
 
 <kbd><img src="Queries_and_Mutations___GraphQL.png" /></kbd>
