@@ -6,4 +6,4 @@
  without having to worry about infrastructure.
  
  
- [Pvious: Prior Art](prior-art.md) [Next: The DSL](dsl.md)
+ [Previous: Prior Art](prior-art.md) [Next: The DSL](dsl.md)
