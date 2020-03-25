@@ -19,8 +19,8 @@ We know we're succesful when someone whose read the User Guide can accomplish th
 # User Guide
 
 1. [Adding your first ingredients](user-guide/01-basics.md) 
-2. [Versioning and Resolving](user-guide/02-versions.md) 
-3. [Packaging](user-guide/03-packaging.md)
-4. [Orders and Commits](user-guide/orders_and_commits.md)
+2. [Versioning and Resolving](user-guide/03-versions.md)  
+3. [Orders and Commits](user-guide/02-requirements.md)
+4. [Packaging](user-guide/04-packaging.md)
 5. [Subscriptions](user-guide/subscriptions.md) (Not Started)
 6. [Scanners/Crawlers](user-guide/scanners.md) (Not Started)
